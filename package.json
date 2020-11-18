@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "bash ./bin/run.sh"
+    "server": "bash ./bin/server.sh"
   },
   "repository": {
     "type": "git",
