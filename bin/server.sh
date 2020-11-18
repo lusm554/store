@@ -14,6 +14,14 @@ run_production_server() {
   fi
 }
 
+exit_nodemon() {
+  if [[ $? -eq 130 ]]
+  then 
+    exit 0
+  else 
+    exit $?
+  fi
+}
 
 if [[ $1 == "kill" ]]
 then 
@@ -26,6 +34,10 @@ then
 elif [[ $1 == 'product' ]]
 then
   run_production_server
-else 
+elif [[ $1 == 'node' ]]
+then
   node $path
+else 
+  nodemon $path
+  exit_nodemon
 fi
