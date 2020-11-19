@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const express = require('express')
 const path = require('path')
@@ -10,8 +11,8 @@ mongoose.connect(process.env.MongoDB, { useUnifiedTopology: true, useNewUrlParse
 // Handle errors after initial connection was established
 mongoose.connection.on('error', console.error)
 
-// Cors for testing api
-app.use(require('cors')())
+app.use(require('cors')()) // Cors for testing api
+app.use(bodyParser.json())
 
 // Define Routers
 const { userRouter } = require('./routes/userRouter')
