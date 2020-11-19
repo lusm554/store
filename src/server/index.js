@@ -10,6 +10,9 @@ mongoose.connect(process.env.MongoDB, { useUnifiedTopology: true, useNewUrlParse
 // Handle errors after initial connection was established
 mongoose.connection.on('error', console.error)
 
+// Cors for testing api
+app.use(require('cors')())
+
 // Define Routers
 const { userRouter } = require('./routes/userRouter')
 
