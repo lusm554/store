@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser')
+const passport = require('passport')
 const mongoose = require('mongoose')
 const express = require('express')
 const path = require('path')
@@ -15,12 +16,10 @@ app.use(require('cors')()) // Cors for testing api
 app.use(bodyParser.json())
 
 // Define Routers
-const { userRouter } = require('./routes/userRouter')
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const { userRouter } = require('./routes/userRouter')
+const { storeRouter } = require('./routes/storeRouter')
 
 app.use('/user', userRouter)
+app.use('/store', passport.authenticate('jwt', { session: false }), storeRouter)
 
 app.listen(process.env.PORT)
