@@ -18,10 +18,10 @@ app.use(bodyParser.json())
 
 // Define Routers
 const { userRouter } = require('./routes/userRouter')
-const { storeRouter } = require('./routes/storeRouter')
+const { productRouter } = require('./routes/productRouter')
 
 app.use('/user', userRouter)
-app.use('/store', passport.authenticate('jwt', { session: false }), storeRouter)
+app.use('/store', passport.authenticate('jwt', { session: false }), productRouter)
 
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
