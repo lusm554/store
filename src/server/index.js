@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const mongoose = require('mongoose')
+mongoose.set('useCreateIndex', true)
 const express = require('express')
 const path = require('path')
 const app = express()
