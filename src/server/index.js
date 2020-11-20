@@ -12,7 +12,7 @@ mongoose.connect(process.env.MongoDB, { useUnifiedTopology: true, useNewUrlParse
 // Handle errors after initial connection was established
 mongoose.connection.on('error', console.error)
 
-app.use(require('cors')()) // Cors for testing api
+app.use(require('cors')()) // Cors for testing API
 app.use(bodyParser.json())
 
 // Define Routers
@@ -21,5 +21,10 @@ const { storeRouter } = require('./routes/storeRouter')
 
 app.use('/user', userRouter)
 app.use('/store', passport.authenticate('jwt', { session: false }), storeRouter)
+
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({ error: err });
+});
 
 app.listen(process.env.PORT)
