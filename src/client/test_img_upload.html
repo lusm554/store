@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id="profile_pic" name="image" accept=".jpg, .jpeg, .png">
+  <button id='btn'>Submit</button>
+
+  <script>
+    let token = prompt('token?')
+    let input = document.querySelector('input[type="file"]')
+
+    let data = new FormData()
+
+    btn.addEventListener('click', (e) => {
+      data.append('image', input.files[0])
+      data.append('product', prompt('product?'))
+      data.append('author', prompt('author?'))
+      fetch(`http://localhost/product/image?secret_token=${token}`, {
+        method: 'POST',
+        "Content-type": "multipart/form-data",
+        body: data
+      })
+    });
+  </script>
+</body>
+</html>
