@@ -6,24 +6,37 @@
   <title>Document</title>
 </head>
 <body>
+  Token: <br>
+  <input type="text" id="token"><br>
+
+  Product id: <br>
+  <input type="text" id="product"><br>
+
+  Author: <br>
+  <input type="text" id="author"><br><br>
+
   <input type="file" id="profile_pic" name="image" accept=".jpg, .jpeg, .png">
   <button id='btn'>Submit</button>
 
   <script>
-    let token = prompt('token?')
     let input = document.querySelector('input[type="file"]')
 
     let data = new FormData()
 
     btn.addEventListener('click', (e) => {
       data.append('image', input.files[0])
-      data.append('product', prompt('product?'))
-      data.append('author', prompt('author?'))
-      fetch(`http://localhost/product/image?secret_token=${token}`, {
+      data.append('product', product.value)
+      data.append('author', author.value)
+      fetch(`http://localhost/product/image?secret_token=${token.value}`, {
         method: 'POST',
         "Content-type": "multipart/form-data",
         body: data
       })
+      .then( async (data) => {
+        let json = await data.json()
+        console.log(json)
+      })
+      .catch(console.error)
     });
   </script>
 </body>
