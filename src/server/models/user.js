@@ -24,7 +24,6 @@ UserSchema.statics.findByLogin = async function(username, callback) {
   }
   
   let user;
-
   try {
     user = await this.findOne({ username })
   } catch (error) {
