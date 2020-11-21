@@ -1,12 +1,12 @@
 require('../auth/auth')
 const mongoose = require('mongoose')
 const userRouter = require('express').Router()
-const { userController } = require('../controllers/userController')
+const { userController: { User, signin } } = require('../controllers/userController')
 
 userRouter.post('/signup', isFieldsExist, async (req, res) => {
   const { username, password } = req.user
 
-  let user = new userController.User(username, password)
+  let user = new User(username, password)
   try {
     user = (await user.save()).fullInfo;
     if (user.error) {
@@ -24,7 +24,7 @@ userRouter.post('/signup', isFieldsExist, async (req, res) => {
   res.status(200).json(user.user)
 })
 
-userRouter.post('/signin', userController.signin)
+userRouter.post('/signin', signin)
 
 function isFieldsExist(req, res, next) {
   const { password, username } = req.body
