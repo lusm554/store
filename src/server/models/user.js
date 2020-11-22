@@ -11,7 +11,11 @@ const UserSchema = new Schema(
       maxlength: 20,
       unique: true
     },
-    password: { type: String, required: true, trim: true }
+    products: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    }],
+    password: { type: String, required: true, trim: true },
   },
   {
     timestamps: true
