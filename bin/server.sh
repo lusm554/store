@@ -37,6 +37,9 @@ then
 elif [[ $1 == 'node' ]]
 then
   node $path
+elif [[ $1 == 'build' ]]
+then
+  mv ./src/config/.example_env ./src/config/.env
 else 
   nodemon $path
   exit_nodemon
