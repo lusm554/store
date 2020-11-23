@@ -25,8 +25,9 @@ app.use('/user', userRouter)
 app.use('/product', passport.authenticate('jwt', { session: false }), productRouter)
 
 app.use(function(err, req, res, next) {
+  console.error(err)
   res.status(err.status || 500);
-  res.json({ error: err });
+  res.json({ error: err.message });
 });
 
 app.listen(process.env.PORT)
