@@ -36,10 +36,8 @@ UserSchema.statics.findByLogin = async function(username, callback) {
   callback(null, user)
 }
 
-UserSchema.statics.validate = async function(password) {
-  const user = this
-  const match = await bcrypt.compare(password, user.password)
-
+UserSchema.statics.validate = async function(password, userPassword) {
+  const match = await bcrypt.compare(password, userPassword)
   return match
 }
 

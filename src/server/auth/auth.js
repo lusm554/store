@@ -19,7 +19,7 @@ passport.use(
           return done(null, false, { message: 'User not found' })
         }
 
-        const match = user.validate(password)
+        let match = await UserModel.validate(password, user.password)
         if (!match) {
           return done(null, false, { message: 'Wrong Password' });
         }
