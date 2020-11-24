@@ -1,4 +1,4 @@
-require('../auth/auth')
+require('../auth/user')
 const mongoose = require('mongoose')
 const userRouter = require('express').Router()
 const { userController: { User, signin } } = require('../controllers/userController')
