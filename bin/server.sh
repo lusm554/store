@@ -40,6 +40,8 @@ then
 elif [[ $1 == 'build' ]]
 then
   mv ./src/config/.example_env ./src/config/.env
+  echo "You need to set your fields in src/config/.env"
+  echo "After that run command - npm run server"
 else 
   nodemon $path
   exit_nodemon
