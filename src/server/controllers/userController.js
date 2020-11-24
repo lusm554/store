@@ -54,8 +54,8 @@ async function signin(req, res, next) {
           { session: false },
           async (error) => {
             if (error) return next(error);
-        
-            const {password, ...body} = user._doc
+            
+            const {password, products, ...body} = user._doc
             const token = jwt.sign({ user: body }, process.env.secret)
 
             return res.json({ token, user: body })
