@@ -1,3 +1,4 @@
+require('../auth/product')
 const productRouter = require('express').Router()
 const { productController: { Query, Product, Image } } = require('../controllers/productController')
 const multer = require('multer')
