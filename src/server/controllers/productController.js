@@ -16,7 +16,7 @@ class Product {
       const { author } = doc
 
       // Add product to user field 'products'
-      let update = await updateField(UserModel, author, { $addToSet: { products: [doc] } })
+      let update = await updateField(UserModel, author, { $addToSet: { products: [doc._id] } })
       if (update.isError) {
         res.status(500).send('An error occurred while updating the document.')
         return;
@@ -36,11 +36,26 @@ class Product {
 
   static delete(id, res) {
     ProductModel.findByIdAndDelete(id)
-      .then((deletedProd) => {
+      .then(async (deletedProd) => {
+        try {
+          // Remove product id from user account
+          const { products } = await UserModel.findById(deletedProd.author)
+          const filteredP = products.filter(a => a.toString() !== id)
+          await UserModel.findByIdAndUpdate(deletedProd.author, { products: filteredP })
+
+          // Remove photo from product
+          if (deletedProd.image) {
+            await ImageModel.findByIdAndDelete(deletedProd.image)
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(500).send('An error occurred while deleting the document.')
+          return
+        }
         res.status(200).json(deletedProd)
       })
       .catch((err) => {
-        console.error(err)
+        console.log(err)
         res.status(500).send('An error occurred while deleting the document.')
       })
   }
@@ -65,7 +80,7 @@ class Query {
       })
       .catch((err) => {
         console.error(err)
-        this.res.status(500).send('An error occured while find products...')
+        this.res.status(500).send('An error occurred while find products...')
       })
     return this
   }
@@ -105,6 +120,10 @@ class Image {
   static getImage(id, res) {
     ImageModel.findById(id)
       .then((image) => {
+        if (image === null) {
+          res.status(404).send('Image not found.')
+          return;
+        }
         res.header('Content-Type', 'image/png')
         res.send(image.img.data)
       })
