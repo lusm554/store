@@ -1,6 +1,6 @@
 require('../auth/product')
 const productRouter = require('express').Router()
-const { productController: { Query, Product, Image } } = require('../controllers/productController')
+const { productController: { Query, Product, Image, authorization } } = require('../controllers/productController')
 const multer = require('multer')
 
 productRouter.post('/new-product', (req, res) => {
@@ -33,13 +33,13 @@ productRouter.get('/image/:id', (req, res) => {
   Image.getImage(id, res)
 })
 
-productRouter.put('/:id', (req, res) => {
+productRouter.put('/:id', authorization, (req, res) => {
   const { data } = req.body
   const { id } = req.params
   Product.change(data, id, res)
 })
 
-productRouter.delete('/:id', (req, res) => {
+productRouter.delete('/:id', authorization, (req, res) => {
   const { id } = req.params
   Product.delete(id, res)
 })

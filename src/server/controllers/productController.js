@@ -145,4 +145,20 @@ async function updateField(model, id, field) {
   return { data, isError: false }
 }
 
-exports.productController = { Product, Image, Query }
+async function authorization(req, res, next) {
+  UserModel.findById(req.user._id)
+    .then(({ products }) => {
+      const isUserOwnProduct = products.includes(req.params.id)
+      if (!isUserOwnProduct) {
+        res.status(401).send('UNAUTHORIZED')
+        return;
+      }
+      next()
+    })
+    .catch((err) => {
+      console.log(err)
+      res.sendStatus(500)
+    })
+}
+
+exports.productController = { Product, Image, Query, authorization }
