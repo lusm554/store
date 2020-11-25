@@ -145,7 +145,7 @@ async function updateField(model, id, field) {
   return { data, isError: false }
 }
 
-async function authorization(req, res, next) {
+ function authorization(req, res, next) {
   UserModel.findById(req.user._id)
     .then(({ products }) => {
       const isUserOwnProduct = products.includes(req.params.id)
